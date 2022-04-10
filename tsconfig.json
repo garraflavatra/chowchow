@@ -1,0 +1,20 @@
+{
+	"include": ["src/**/*"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "ESNext",
+		"module": "UMD",
+		"moduleResolution": "node",
+		"strict": true,
+		"esModuleInterop": true,
+		"rootDir": "src",
+		"outDir": "dist",
+		"declaration": true,
+		"useUnknownInCatchVariables": false
+	},
+	"typedocOptions": {
+        "entryPoints": ["src/index.ts"],
+        "out": "docs",
+		"name": "Chowchow"
+    }
+}
