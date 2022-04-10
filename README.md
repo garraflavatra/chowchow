@@ -12,7 +12,7 @@ Efficient and customisable server-side caching made easy. Chowchow caches everyt
 ## Installation
 
 ```shell
-npm install chowchow
+npm install @garraflavatra/chowchow
 ```
 
 ## Usage

@@ -1,5 +1,5 @@
 {
-	"name": "chowchow",
+	"name": "@garraflavatra/chowchow",
 	"version": "1.0.0",
 	"description": "Efficient and customisable caching made easy.",
 	"author": "Romein van Buren <romein@vburen.nl>",
