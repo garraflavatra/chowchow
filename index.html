@@ -2,7 +2,7 @@
 <a href="#chowchow" id="chowchow" style="color: inherit; text-decoration: none;">
   <h1>Chowchow</h1>
 </a>
-<p><a href="https://projects.romeinvanburen.nl/chowchow/"><img src="https://img.shields.io/badge/api-docs-blue" alt="API docs"></a></p>
+<p><a href="https://garraflavatra.github.io/chowchow/"><img src=".github/api.svg" alt="API docs"></a></p>
 <p>Efficient and customisable server-side caching made easy. Chowchow caches everything you want to cache, from CMS data to API responses.</p>
 <ul>
 <li>🚀 Makes your app faster.</li>
@@ -20,12 +20,14 @@
 <a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
   <h2>Usage</h2>
 </a>
+<p><a href="https://garraflavatra.github.io/chowchow/classes/CacheStore.html"><img src=".github/api.svg" alt="API docs"></a></p>
 <pre><code class="language-js"><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">CacheStore</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&#39;chowchow&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">cache</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-6">CacheStore</span><span class="hl-0">(</span><br/><span class="hl-0">    </span><span class="hl-7">/* Store name */</span><span class="hl-0"> </span><span class="hl-3">&#39;cache&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-7">/* Callback that fetches data */</span><span class="hl-0"> </span><span class="hl-4">async</span><span class="hl-0"> () </span><span class="hl-4">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">res</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-6">fetch</span><span class="hl-0">(</span><span class="hl-3">&#39;http://localhost:5000/myapi&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (!</span><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-2">ok</span><span class="hl-0">) </span><span class="hl-1">return</span><span class="hl-0"> { </span><span class="hl-2">success:</span><span class="hl-0"> </span><span class="hl-4">false</span><span class="hl-0"> };</span><br/><br/><span class="hl-0">        </span><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">entries</span><span class="hl-0"> = </span><span class="hl-1">await</span><span class="hl-0"> </span><span class="hl-2">res</span><span class="hl-0">.</span><span class="hl-6">json</span><span class="hl-0">();</span><br/><span class="hl-0">        </span><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">filtered</span><span class="hl-0"> = </span><span class="hl-2">entries</span><span class="hl-0">.</span><span class="hl-6">filter</span><span class="hl-0">(</span><span class="hl-2">e</span><span class="hl-0"> </span><span class="hl-4">=&gt;</span><span class="hl-0"> </span><span class="hl-2">e</span><span class="hl-0">.</span><span class="hl-2">status</span><span class="hl-0"> === </span><span class="hl-3">&#39;online&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (!</span><span class="hl-2">filtered</span><span class="hl-0">.</span><span class="hl-2">length</span><span class="hl-0">) </span><span class="hl-1">return</span><span class="hl-0"> { </span><span class="hl-2">success:</span><span class="hl-0"> </span><span class="hl-4">false</span><span class="hl-0"> };</span><br/><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> { </span><span class="hl-2">success:</span><span class="hl-0"> </span><span class="hl-4">true</span><span class="hl-0">, </span><span class="hl-2">data:</span><span class="hl-0"> </span><span class="hl-2">onlineEntries</span><span class="hl-0"> };</span><br/><span class="hl-0">    },</span><br/><span class="hl-0">    </span><span class="hl-7">/* Maximum age in minutes */</span><span class="hl-0"> </span><span class="hl-8">15</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-7">/* Cache file directory */</span><span class="hl-0"> </span><span class="hl-3">&#39;.cache&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-7">/* File name */</span><span class="hl-0"> </span><span class="hl-3">&#39;cache&#39;</span><br/><span class="hl-0">);</span>
 </code></pre>
 
 <a href="#get-the-data" id="get-the-data" style="color: inherit; text-decoration: none;">
   <h3>Get the data</h3>
 </a>
+<p><a href="https://garraflavatra.github.io/chowchow/classes/CacheStore.html"><img src=".github/api.svg" alt="API docs"></a></p>
 <p>If the cache is not expired yet according to the expiration time, it will return the cache. Otherwise it will fetch new data, save it to the store, and return it.</p>
 <pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">data</span><span class="hl-0"> = </span><span class="hl-2">cache</span><span class="hl-0">.</span><span class="hl-6">getData</span><span class="hl-0">();</span>
 </code></pre>
@@ -33,6 +35,7 @@
 <a href="#read-the-cache" id="read-the-cache" style="color: inherit; text-decoration: none;">
   <h3>Read the cache</h3>
 </a>
+<p><a href="https://garraflavatra.github.io/chowchow/classes/CacheStore.html#readCache"><img src=".github/api.svg" alt="API docs"></a></p>
 <p>This returns the cache, regardless of whether it is expired or not.</p>
 <pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">cachedData</span><span class="hl-0"> = </span><span class="hl-2">cache</span><span class="hl-0">.</span><span class="hl-6">readCache</span><span class="hl-0">();</span>
 </code></pre>
@@ -40,7 +43,8 @@
 <a href="#get-fresh-data" id="get-fresh-data" style="color: inherit; text-decoration: none;">
   <h3>Get fresh data</h3>
 </a>
-<p>This fetches fresh data and returns it, regardless of whether it is expired or not. The function is the given callback parameter of the constructor.</p>
+<p><a href="https://garraflavatra.github.io/chowchow/classes/CacheStore.html#getFreshData"><img src=".github/api.svg" alt="API docs"></a></p>
+<p>This fetches fresh data and returns it, regardless of whether it is expired or not. The function is the given callback parameter of the constructor. Note that this does not write the cache to the cache file.</p>
 <pre><code class="language-js"><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">freshData</span><span class="hl-0"> = </span><span class="hl-2">cache</span><span class="hl-0">.</span><span class="hl-6">getFreshData</span><span class="hl-0">();</span>
 </code></pre>
 
