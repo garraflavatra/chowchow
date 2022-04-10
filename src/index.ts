@@ -22,7 +22,7 @@ export type MaybePromise<T> = Promise<T> | T;
  * Keep in mind that it does not have to be **cached** data, since it can also
  * contain newly fetched data. In that case, {@link fromCache} will be `false`.
  */
-export type CachedData = {
+export interface CachedData {
 	/** True if the fresh data or cache is successfully fetched. */
 	success: boolean;
 
