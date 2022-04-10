@@ -14,7 +14,7 @@
 	},
 	"typedocOptions": {
         "entryPoints": ["src/index.ts"],
-        "out": "docs",
+        "out": "dist-docs",
 		"name": "Chowchow"
     }
 }
