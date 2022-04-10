@@ -1,6 +1,6 @@
 # Chowchow
 
-[![API docs](https://img.shields.io/badge/api-docs-blue)](https://projects.romeinvanburen.nl/chowchow/)
+[![API docs](.github/api.svg)](https://garraflavatra.github.io/chowchow/)
 
 Efficient and customisable server-side caching made easy. Chowchow caches everything you want to cache, from CMS data to API responses.
 
@@ -16,6 +16,8 @@ npm install @garraflavatra/chowchow
 ```
 
 ## Usage
+
+[![API docs](.github/api.svg)](https://garraflavatra.github.io/chowchow/classes/CacheStore.html)
 
 ```js
 import CacheStore from 'chowchow';
@@ -40,6 +42,8 @@ const cache = new CacheStore(
 
 ### Get the data
 
+[![API docs](.github/api.svg)](https://garraflavatra.github.io/chowchow/classes/CacheStore.html)
+
 If the cache is not expired yet according to the expiration time, it will return the cache. Otherwise it will fetch new data, save it to the store, and return it.
 
 ```js
@@ -47,6 +51,8 @@ const data = cache.getData();
 ```
 
 ### Read the cache
+
+[![API docs](.github/api.svg)](https://garraflavatra.github.io/chowchow/classes/CacheStore.html#readCache)
 
 This returns the cache, regardless of whether it is expired or not.
 
@@ -56,7 +62,9 @@ const cachedData = cache.readCache();
 
 ### Get fresh data
 
-This fetches fresh data and returns it, regardless of whether it is expired or not. The function is the given callback parameter of the constructor.
+[![API docs](.github/api.svg)](https://garraflavatra.github.io/chowchow/classes/CacheStore.html#getFreshData)
+
+This fetches fresh data and returns it, regardless of whether it is expired or not. The function is the given callback parameter of the constructor. Note that this does not write the cache to the cache file.
 
 ```js
 const freshData = cache.getFreshData();
