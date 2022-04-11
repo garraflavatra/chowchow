@@ -125,14 +125,20 @@ export class CacheStore {
 	 * return the cache. Otherwise it will fetch new data, save it to the store,
 	 * and return it.
 	 *
+	 * This method uses the following strategy:
+	 *
+	 * 1. Check whether pre-existing cache is still valid and, if so, return it.
+	 * 2. Cache is not valid or does not yet exist. Get fresh data and validate
+	 *    it.
+	 * 3. Newly fetched data is valid. Write and return fresh data.
+	 *
 	 * @returns Data.
 	 */
 	async getData(): Promise<CachedData> {
 		const now = new Date();
 		const cache = await this.readCache();
 
-		// 1. Check whether pre-existing cache is still valid and, if so, return
-		//    it..
+		// 1
 		if (
 			cache.success
 			&& cache.savedOn
@@ -140,8 +146,7 @@ export class CacheStore {
 			<  this.expirationDate.getTime()
 		) return { ...cache, fromCache: true, success: true };
 
-		// -> Cache is not valid or does not yet exist.
-		// 2. Get fresh data and validate it.
+		// 2
 		const freshData = await this.getFreshData();
 
 		if (!freshData.success) return {
@@ -150,8 +155,7 @@ export class CacheStore {
 			success: false
 		};
 
-		// -> Newly fetched data is valid.
-		// 3. Write and return fresh data.
+		// 3
 		const newCache: CachedData = {
 			success: true,
 			fromCache: false,
