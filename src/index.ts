@@ -63,20 +63,19 @@ export class CacheStore {
 	/** Callback function that fetches the data to be cached. */
 	getFreshData: Callback;
 
-	constructor(
-		/** Machine-readable name of the store. */
-		name: string,
-
-		/** Callback that fetches the data to be cached */
+	/**
+	 * Construct a new cache store object.
+	 *
+	 * @param name Machine-readable name of the store.
+	 * @param getFreshData Callback that fetches the data to be cached.
+	 * @param maxAge Maximum age of the cache in minutes.
+	 * @param fileDir Directory name the file lives in.
+	 * @param fileName Name of the JSON file the cached data lives in.
+	 */
+	constructor(name: string,
 		getFreshData: Callback,
-
-		/** Maximum age of the cache in minutes. */
 		maxAge = 15,
-
-		/** Directory name the file lives in. */
 		fileDir = '.cache',
-
-		/** Name of the JSON file the cached data lives in. */
 		fileName = name
 	) {
 		this.name = name;
