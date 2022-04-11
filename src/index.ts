@@ -108,7 +108,7 @@ export class CacheStore {
 	/** Actual expiration date, i.e. now + expiration time. */
 	get expirationDate(): Date {
 		const expDate = new Date();
-		expDate.setTime(expDate.getTime() + (this.maxAge * 60_000));
+		expDate.setMinutes(new Date().getMinutes() + this.maxAge);
 		return expDate;
 	}
 
@@ -116,6 +116,29 @@ export class CacheStore {
 	ensureCacheFileExists() {
 		try { fs.mkdirSync(this.fileDir, { recursive: true }); }
 		catch (err) { if (err.code !== 'EEXIST') throw err; }
+	}
+
+	/**
+	 * Check if the cache is expired.
+	 *
+	 * @param data Cached data to check. If no parameter is passed, this method will read the cache store using {@link this.readCache()}.
+	 * @returns `true` if the cache is expired. Otherwise `false`.
+	 */
+	async isCacheExpired(data?: CachedData) {
+		const c = data || await this.readCache();
+		return !!(
+			c.savedOn &&
+			(new Date(c.savedOn).getTime() > this.expirationDate.getTime())
+		)
+	}
+
+	/**
+	 * Write the newly fetched data to the cache store.
+	 * @param data Cached data to write.
+	 */
+	async writeCache(data: CachedData) {
+		this.ensureCacheFileExists();
+		await fsp.writeFile(this.filePath, JSON.stringify(data));
 	}
 
 	/**
@@ -139,16 +162,11 @@ export class CacheStore {
 		const cache = await this.readCache();
 
 		// 1
-		if (
-			cache.success
-			&& cache.savedOn
-			&& new Date(cache.savedOn).getTime()
-			<  this.expirationDate.getTime()
-		) return { ...cache, fromCache: true, success: true };
+		if (cache.success && !this.isCacheExpired(cache))
+			return { ...cache, fromCache: true, success: true };
 
 		// 2
 		const freshData = await this.getFreshData();
-
 		if (!freshData.success) return {
 			...cache,
 			fromCache: true,
@@ -162,9 +180,7 @@ export class CacheStore {
 			savedOn: now,
 			data: freshData.data
 		};
-
-		this.ensureCacheFileExists();
-		fsp.writeFile(this.filePath, JSON.stringify(newCache));
+		await this.writeCache(newCache);
 		return newCache;
 	}
 }
