@@ -120,7 +120,7 @@ export class CacheStore {
 	/**
 	 * Check if the cache is expired.
 	 *
-	 * @param data Cached data to check. If no parameter is passed, this method will read the cache store using {@link this.readCache()}.
+	 * @param data Cached data to check. If no parameter is passed, this method will read the cache store using {@link readCache}.
 	 * @returns `true` if the cache is expired. Otherwise `false`.
 	 */
 	async isCacheExpired(data?: CachedData): Promise<boolean> {
