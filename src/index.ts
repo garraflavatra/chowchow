@@ -86,7 +86,7 @@ export class CacheStore {
 	}
 
 	/** Full store file path. */
-	get filePath() {
+	get filePath(): string {
 		return join(process.cwd(), `${this.fileDir}/${this.name}.json`)
 	}
 
@@ -104,15 +104,15 @@ export class CacheStore {
 		}
 	}
 
-	/** Actual expiration date, i.e. now + expiration time. */
-	get expirationDate(): Date {
+	/** Calculate the actual expiration date, i.e. now + expiration time. */
+	getExpirationDate(): Date {
 		const expDate = new Date();
 		expDate.setMinutes(new Date().getMinutes() + this.maxAge);
 		return expDate;
 	}
 
 	/** Create the store directory. */
-	ensureCacheFileExists() {
+	ensureCacheFileExists(): void {
 		try { fs.mkdirSync(this.fileDir, { recursive: true }); }
 		catch (err) { if (err.code !== 'EEXIST') throw err; }
 	}
@@ -123,19 +123,19 @@ export class CacheStore {
 	 * @param data Cached data to check. If no parameter is passed, this method will read the cache store using {@link this.readCache()}.
 	 * @returns `true` if the cache is expired. Otherwise `false`.
 	 */
-	async isCacheExpired(data?: CachedData) {
+	async isCacheExpired(data?: CachedData): Promise<boolean> {
 		const c = data || await this.readCache();
 		return !!(
 			c.savedOn &&
-			(new Date(c.savedOn).getTime() > this.expirationDate.getTime())
-		)
+			(new Date(c.savedOn).getTime() > this.getExpirationDate().getTime())
+		);
 	}
 
 	/**
 	 * Write the newly fetched data to the cache store.
 	 * @param data Cached data to write.
 	 */
-	async writeCache(data: CachedData) {
+	async writeCache(data: CachedData): Promise<void> {
 		this.ensureCacheFileExists();
 		await fsp.writeFile(this.filePath, JSON.stringify(data));
 	}
@@ -159,10 +159,12 @@ export class CacheStore {
 	async getData(): Promise<CachedData> {
 		const now = new Date();
 		const cache = await this.readCache();
+		const isExpired = await this.isCacheExpired(cache);
 
 		// 1
-		if (cache.success && !this.isCacheExpired(cache))
+		if (cache.success && !isExpired)
 			return { ...cache, fromCache: true, success: true };
+
 
 		// 2
 		const freshData = await this.getFreshData();
