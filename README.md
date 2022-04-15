@@ -47,7 +47,7 @@ const cache = new CacheStore(
 If the cache is not expired yet according to the expiration time, it will return the cache. Otherwise it will fetch new data, save it to the store, and return it.
 
 ```js
-const data = cache.getData();
+const data = await cache.getData();
 ```
 
 ### Read the cache
@@ -57,7 +57,7 @@ const data = cache.getData();
 This returns the cache, regardless of whether it is expired or not.
 
 ```js
-const cachedData = cache.readCache();
+const cachedData = await cache.readCache();
 ```
 
 ### Get fresh data
@@ -67,7 +67,7 @@ const cachedData = cache.readCache();
 This fetches fresh data and returns it, regardless of whether it is expired or not. The function is the given callback parameter of the constructor. Note that this does not write the cache to the cache file.
 
 ```js
-const freshData = cache.getFreshData();
+const freshData = await cache.getFreshData();
 ```
 
 ## License
