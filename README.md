@@ -6,7 +6,7 @@ Efficient and customisable server-side caching made easy. Chowchow caches everyt
 
 - 🚀 Makes your app faster.
 - 💼 Bring your own function to get the data.
-- 🕰 Expiration time from 2 seconds to 2 eons.
+- 🕰 Expiration time from 1 second to an aeon.
 - 🪶 Extremely lightweight (1.8 kB).
 
 ## Installation
